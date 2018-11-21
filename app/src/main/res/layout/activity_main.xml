@@ -61,6 +61,28 @@
             android:ems="10"
             />
 
+        <Button
+        android:id="@+id/dodajWyjazd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/lokalizacja"
+        android:layout_marginTop="15dp"
+        android:layout_alignLeft="@id/lokalizacja"
+        android:text="Dodaj wyjazd"
+        android:textSize="10dp"
+        android:ems="6"/>
+
+        <Button
+            android:id="@+id/pokazWyjazdy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lokalizacja"
+            android:layout_marginTop="15dp"
+            android:layout_alignRight="@id/lokalizacja"
+            android:text="Pokaż listę wyjazdów"
+            android:textSize="10dp"
+            android:ems="6"/>
+
     </RelativeLayout>
 
 </ScrollView>
