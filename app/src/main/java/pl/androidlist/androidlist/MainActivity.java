@@ -89,7 +89,6 @@ public class MainActivity extends AppCompatActivity {
         btnShowTrips=findViewById(R.id.showTrips);
 
         sqLiteHelper = new SQLiteHelper(this,"TRIPS-DATABASE.sqlite", null, 1);
-        sqLiteHelper.queryData("DROP TABLE TRIPS;");
         sqLiteHelper.queryData("CREATE TABLE IF NOT EXISTS TRIPS(" +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT," +
                 "departure_date VARCHAR," +
