@@ -3,6 +3,8 @@ package pl.androidlist.androidlist;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -18,15 +20,20 @@ import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageActivity;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
+import java.io.ByteArrayOutputStream;
+
+import pl.androidlist.androidlist.SQLiteConfig.SQLiteHelper;
+
 import static com.theartofdev.edmodo.cropper.CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE;
 
 public class MainActivity extends AppCompatActivity {
 
-    EditText mEditDataWyjazdu, mEditDataPowrotu, mEditCena, mEditLokalizacja;
-    Button btnDodaj, btnPokaz;
-    ImageView mObrazek;
+    EditText editDepartureDate, editReturnDate, editPrice, editLocation;
+    Button btnAddTrip, btnShowTrips;
+    ImageView Image;
 
     static int REQUEST_CODE_GALLERY=999;
+    public static SQLiteHelper sqLiteHelper;
 
     // nadanie uprawnień użytkownikowi aplikacji do dostępu do galerii
     @Override
@@ -58,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
             if(resultCode == RESULT_OK){
                 Uri resultUri = result.getUri();
-                mObrazek.setImageURI(resultUri);
+                Image.setImageURI(resultUri);
             }
             else if (resultCode == CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE){
                 Exception error= result.getError();
@@ -73,15 +80,25 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mEditDataWyjazdu=findViewById(R.id.dataWyjazdu);
-        mEditDataPowrotu=findViewById(R.id.dataPowrotu);
-        mEditCena=findViewById(R.id.cena);
-        mEditLokalizacja=findViewById(R.id.lokalizacja);
-        mObrazek=findViewById(R.id.obrazek);
-        btnDodaj=findViewById(R.id.dodajWyjazd);
-        btnPokaz=findViewById(R.id.pokazWyjazdy);
+        editDepartureDate=findViewById(R.id.departureDate);
+        editReturnDate=findViewById(R.id.returnDate);
+        editPrice=findViewById(R.id.price);
+        editLocation=findViewById(R.id.location);
+        Image=findViewById(R.id.image);
+        btnAddTrip=findViewById(R.id.addTrip);
+        btnShowTrips=findViewById(R.id.showTrips);
 
-        mObrazek.setOnClickListener(new View.OnClickListener() {
+        sqLiteHelper = new SQLiteHelper(this,"TRIPS-DATABASE.sqlite", null, 1);
+        sqLiteHelper.queryData("DROP TABLE TRIPS;");
+        sqLiteHelper.queryData("CREATE TABLE IF NOT EXISTS TRIPS(" +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "departure_date VARCHAR," +
+                "return_date VARCHAR," +
+                "price VARCHAR," +
+                "location VARCHAR,"+
+                "image BLOB);");
+
+        Image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 ActivityCompat.requestPermissions(MainActivity.this,
@@ -90,5 +107,38 @@ public class MainActivity extends AppCompatActivity {
                 );
             }
         });
+
+        btnAddTrip.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                try{
+                    sqLiteHelper.insertData(
+                            editDepartureDate.getText().toString().trim(),
+                            editReturnDate.getText().toString().trim(),
+                            editPrice.getText().toString().trim(),
+                            editLocation.getText().toString().trim(),
+                            imageViewToByte(Image)
+                    );
+                    Toast.makeText(MainActivity.this, "Dodano wycieczkę", Toast.LENGTH_SHORT).show();
+
+                    editDepartureDate.setText("");
+                    editReturnDate.setText("");
+                    editLocation.setText("");
+                    editPrice.setText("");
+                    Image.setImageResource(R.drawable.photo_icon);
+
+                } catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    private static byte[] imageViewToByte(ImageView image) {
+        Bitmap bitmap = ((BitmapDrawable)image.getDrawable()).getBitmap();
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG,100, outputStream);
+        byte [] imageBytes = outputStream.toByteArray();
+        return imageBytes;
     }
 }
