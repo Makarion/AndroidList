@@ -131,6 +131,13 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+        btnShowTrips.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, TripsListActivity.class));
+            }
+        });
     }
 
     private static byte[] imageViewToByte(ImageView image) {

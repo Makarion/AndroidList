@@ -7,44 +7,43 @@ import java.util.Date;
  */
 
 public class Wyjazd {
-    private Long id;
-    private Date dataWyjazdu;
-    private Date dataPowrotu;
+    private int id;
+    private String dataWyjazdu;
+    private String dataPowrotu;
     private double cena;
     private String lokalizacja;
+    private byte [] image;
 
-    @Override
-    public String toString() {
-        return "Wyjazd{" +
-                "id=" + id +
-                ", dataWyjazdu=" + dataWyjazdu +
-                ", dataPowrotu=" + dataPowrotu +
-                ", cena=" + cena +
-                ", lokalizacja='" + lokalizacja + '\'' +
-                '}';
+    public Wyjazd(int id, String dataWyjazdu, String dataPowrotu, double cena, String lokalizacja, byte[] image) {
+        this.id = id;
+        this.dataWyjazdu = dataWyjazdu;
+        this.dataPowrotu = dataPowrotu;
+        this.cena = cena;
+        this.lokalizacja = lokalizacja;
+        this.image = image;
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public Date getDataWyjazdu() {
+    public String getDataWyjazdu() {
         return dataWyjazdu;
     }
 
-    public void setDataWyjazdu(Date dataWyjazdu) {
+    public void setDataWyjazdu(String dataWyjazdu) {
         this.dataWyjazdu = dataWyjazdu;
     }
 
-    public Date getDataPowrotu() {
+    public String getDataPowrotu() {
         return dataPowrotu;
     }
 
-    public void setDataPowrotu(Date dataPowrotu) {
+    public void setDataPowrotu(String dataPowrotu) {
         this.dataPowrotu = dataPowrotu;
     }
 
@@ -62,5 +61,13 @@ public class Wyjazd {
 
     public void setLokalizacja(String lokalizacja) {
         this.lokalizacja = lokalizacja;
+    }
+
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
     }
 }
