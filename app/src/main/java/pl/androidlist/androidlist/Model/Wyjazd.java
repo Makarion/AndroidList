@@ -10,11 +10,11 @@ public class Wyjazd {
     private int id;
     private String dataWyjazdu;
     private String dataPowrotu;
-    private double cena;
+    private String cena;
     private String lokalizacja;
     private byte [] image;
 
-    public Wyjazd(int id, String dataWyjazdu, String dataPowrotu, double cena, String lokalizacja, byte[] image) {
+    public Wyjazd(int id, String dataWyjazdu, String dataPowrotu, String cena, String lokalizacja, byte[] image) {
         this.id = id;
         this.dataWyjazdu = dataWyjazdu;
         this.dataPowrotu = dataPowrotu;
@@ -47,11 +47,11 @@ public class Wyjazd {
         this.dataPowrotu = dataPowrotu;
     }
 
-    public double getCena() {
+    public String getCena() {
         return cena;
     }
 
-    public void setCena(double cena) {
+    public void setCena(String cena) {
         this.cena = cena;
     }
 
