@@ -2,6 +2,7 @@ package pl.androidlist.androidlist.Adapter;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -19,6 +20,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import pl.androidlist.androidlist.Fragments.TripActivity;
 import pl.androidlist.androidlist.MainActivity;
 import pl.androidlist.androidlist.Model.Wyjazd;
 import pl.androidlist.androidlist.R;
@@ -34,7 +36,6 @@ public class TripsListAdapter extends RecyclerView.Adapter<TripsListAdapter.View
     Cursor cursor = MainActivity.sqLiteHelper.getData("SELECT * FROM TRIPS");
     private List<Wyjazd> tripsList;
     View.OnClickListener onClickListener;
-    Dialog dialog;
 
     public TripsListAdapter(Context context,List<Wyjazd> tripsList) {
         this.context = context;
@@ -49,32 +50,6 @@ public class TripsListAdapter extends RecyclerView.Adapter<TripsListAdapter.View
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.row, parent, false);
 
-        final ViewHolder viewHolder = new ViewHolder(v);
-
-        dialog=new Dialog(parent.getContext());
-        dialog.setContentView(R.layout.fragment_trip);
-
-
-        viewHolder.trip_item.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-/*
-                TextView tripRowDepartureDate = dialog.findViewById(R.id.tripRowDepartureDate);
-                TextView tripRowReturnDate = dialog.findViewById(R.id.tripRowReturnDate);
-                TextView tripRowPrice = dialog.findViewById(R.id.tripRowPrice);
-                TextView tripRowLocation = dialog.findViewById(R.id.tripRowLocation);
-
-                tripRowDepartureDate.setText(tripsList.get(viewHolder.getAdapterPosition()).getDataWyjazdu());
-                tripRowReturnDate.setText(tripsList.get(viewHolder.getAdapterPosition()).getDataPowrotu());
-                tripRowPrice.setText(tripsList.get(viewHolder.getAdapterPosition()).getCena());
-                tripRowLocation.setText(tripsList.get(viewHolder.getAdapterPosition()).getLokalizacja());
-
-*/
-
-                Toast.makeText(context, "Click"  + String.valueOf(viewHolder), Toast.LENGTH_SHORT).show();
-                dialog.show();
-            }
-        });
 
         return new ViewHolder(v);
     }
@@ -101,6 +76,22 @@ public class TripsListAdapter extends RecyclerView.Adapter<TripsListAdapter.View
         int id = cursor.getInt(0);
 
         viewHolder.itemView.setTag(id);
+
+        viewHolder.trip_item.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(context, TripActivity.class);
+                intent.putExtra("departure_date", tripsList.get(position).getDataWyjazdu());
+                intent.putExtra("return_date", tripsList.get(position).getDataPowrotu());
+                intent.putExtra("price", tripsList.get(position).getCena());
+                intent.putExtra("location", tripsList.get(position).getLokalizacja());
+                intent.putExtra("image", tripsList.get(position).getImage());
+
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
