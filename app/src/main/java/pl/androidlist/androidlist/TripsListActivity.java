@@ -1,12 +1,16 @@
 package pl.androidlist.androidlist;
 
+import android.content.DialogInterface;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
+
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
+
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -40,9 +44,10 @@ public class TripsListActivity extends AppCompatActivity {
         TripsListRecyclerView.setAdapter(adapter);
 
 
+
         //pobranie wycieczek z bazy danych
 
-        Cursor cursor = MainActivity.sqLiteHelper.getData("SELECT * FROM TRIPS");
+        final Cursor cursor = MainActivity.sqLiteHelper.getData("SELECT * FROM TRIPS");
 
         tripsList.clear();
         while(cursor.moveToNext()){
@@ -52,7 +57,7 @@ public class TripsListActivity extends AppCompatActivity {
             String price = cursor.getString(3);
             String location = cursor.getString(4);
 
-            byte [] image = cursor.getBlob(4);
+            byte [] image = cursor.getBlob(5);
 
             tripsList.add(new Wyjazd(id, departureDate, returnDate, price, location, image));
             adapter.notifyDataSetChanged();
@@ -61,5 +66,22 @@ public class TripsListActivity extends AppCompatActivity {
                 Toast.makeText(this, "Brak wyjazdów", Toast.LENGTH_SHORT).show();
             }
         }
+
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT){
+
+            @Override
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int i) {
+                removeTrip((int) viewHolder.itemView.getTag());
+            }
+        }).attachToRecyclerView(TripsListRecyclerView);
+    }
+
+    private void removeTrip(int tag) {
+        MainActivity.sqLiteHelper.deleteData(tag);
     }
 }
