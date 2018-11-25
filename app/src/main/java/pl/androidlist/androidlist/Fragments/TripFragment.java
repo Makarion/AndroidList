@@ -28,11 +28,12 @@ public class TripFragment extends Fragment {
     }
 
     public View onCreateView(LayoutInflater layoutInflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
-        v = layoutInflater.inflate(R.layout.fragment_trip, container, false);
+        v = layoutInflater.inflate(R.layout.row, container, false);
         recyclerView = v.findViewById(R.id.trips_recycler_view);
 
         TripsListAdapter tripsListAdapter = new TripsListAdapter(getActivity(), tripsList);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.setAdapter(tripsListAdapter);
         return v;
 
     }

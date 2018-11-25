@@ -55,7 +55,7 @@ public class TripsListAdapter extends RecyclerView.Adapter<TripsListAdapter.View
         dialog.setContentView(R.layout.fragment_trip);
 
 
-        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+        viewHolder.trip_item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 /*
@@ -71,7 +71,7 @@ public class TripsListAdapter extends RecyclerView.Adapter<TripsListAdapter.View
 
 */
 
-                Toast.makeText(parent.getContext(), "Click", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Click"  + String.valueOf(viewHolder), Toast.LENGTH_SHORT).show();
                 dialog.show();
             }
         });
@@ -112,14 +112,14 @@ public class TripsListAdapter extends RecyclerView.Adapter<TripsListAdapter.View
 
     public class ViewHolder extends RecyclerView.ViewHolder{
 
-        private CardView trip;
+        private CardView trip_item;
         ImageView img;
         TextView txtDepartureDate, txtReturnDate, txtPrice, txtLocation;
 
         public ViewHolder(View itemView) {
             super(itemView);
 
-            trip=itemView.findViewById(R.id.rowTripElement);
+            trip_item=itemView.findViewById(R.id.rowTripElement);
 
             txtDepartureDate = itemView.findViewById(R.id.rowDepartureDate);
             txtReturnDate = itemView.findViewById(R.id.rowReturnDate);

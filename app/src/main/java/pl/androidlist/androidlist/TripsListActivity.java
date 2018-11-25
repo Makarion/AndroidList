@@ -27,8 +27,6 @@ public class TripsListActivity extends AppCompatActivity {
 
     List<Wyjazd> tripsList = new ArrayList<>();
 
-    ImageView imageViewIcon;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
