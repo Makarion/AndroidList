@@ -1,15 +1,18 @@
 package pl.androidlist.androidlist.Adapter;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,6 +22,7 @@ import java.util.List;
 import pl.androidlist.androidlist.MainActivity;
 import pl.androidlist.androidlist.Model.Wyjazd;
 import pl.androidlist.androidlist.R;
+import pl.androidlist.androidlist.TripsListActivity;
 
 /**
  * Created by Makarion on 2018-11-22.
@@ -30,6 +34,7 @@ public class TripsListAdapter extends RecyclerView.Adapter<TripsListAdapter.View
     Cursor cursor = MainActivity.sqLiteHelper.getData("SELECT * FROM TRIPS");
     private List<Wyjazd> tripsList;
     View.OnClickListener onClickListener;
+    Dialog dialog;
 
     public TripsListAdapter(Context context,List<Wyjazd> tripsList) {
         this.context = context;
@@ -38,15 +43,36 @@ public class TripsListAdapter extends RecyclerView.Adapter<TripsListAdapter.View
 
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(final ViewGroup parent, final int position) {
+
+
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.row, parent, false);
 
-        RecyclerView.ViewHolder viewHolder = new ViewHolder(v);
+        final ViewHolder viewHolder = new ViewHolder(v);
+
+        dialog=new Dialog(parent.getContext());
+        dialog.setContentView(R.layout.fragment_trip);
+
+
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                onClickListener.onClick(view);
+            public void onClick(View v) {
+/*
+                TextView tripRowDepartureDate = dialog.findViewById(R.id.tripRowDepartureDate);
+                TextView tripRowReturnDate = dialog.findViewById(R.id.tripRowReturnDate);
+                TextView tripRowPrice = dialog.findViewById(R.id.tripRowPrice);
+                TextView tripRowLocation = dialog.findViewById(R.id.tripRowLocation);
+
+                tripRowDepartureDate.setText(tripsList.get(viewHolder.getAdapterPosition()).getDataWyjazdu());
+                tripRowReturnDate.setText(tripsList.get(viewHolder.getAdapterPosition()).getDataPowrotu());
+                tripRowPrice.setText(tripsList.get(viewHolder.getAdapterPosition()).getCena());
+                tripRowLocation.setText(tripsList.get(viewHolder.getAdapterPosition()).getLokalizacja());
+
+*/
+
+                Toast.makeText(parent.getContext(), "Click", Toast.LENGTH_SHORT).show();
+                dialog.show();
             }
         });
 
@@ -75,15 +101,6 @@ public class TripsListAdapter extends RecyclerView.Adapter<TripsListAdapter.View
         int id = cursor.getInt(0);
 
         viewHolder.itemView.setTag(id);
-
-        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-               // Toast.makeText(context, "onClick na zdjęcie: " + position, Toast.LENGTH_SHORT).show();
-
-            }
-        });
-
     }
 
     @Override
@@ -92,18 +109,23 @@ public class TripsListAdapter extends RecyclerView.Adapter<TripsListAdapter.View
     }
 
 
+
     public class ViewHolder extends RecyclerView.ViewHolder{
+
+        private CardView trip;
         ImageView img;
         TextView txtDepartureDate, txtReturnDate, txtPrice, txtLocation;
 
-        public ViewHolder(View row) {
-            super(row);
+        public ViewHolder(View itemView) {
+            super(itemView);
 
-            txtDepartureDate = row.findViewById(R.id.rowDepartureDate);
-            txtReturnDate = row.findViewById(R.id.rowReturnDate);
-            txtPrice = row.findViewById(R.id.rowPrice);
-            txtLocation = row.findViewById(R.id.rowLocation);
-            img = row.findViewById(R.id.rowImageView);
+            trip=itemView.findViewById(R.id.rowTripElement);
+
+            txtDepartureDate = itemView.findViewById(R.id.rowDepartureDate);
+            txtReturnDate = itemView.findViewById(R.id.rowReturnDate);
+            txtPrice = itemView.findViewById(R.id.rowPrice);
+            txtLocation = itemView.findViewById(R.id.rowLocation);
+            img = itemView.findViewById(R.id.rowImageView);
         }
     }
 
