@@ -17,7 +17,6 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.theartofdev.edmodo.cropper.CropImage;
-import com.theartofdev.edmodo.cropper.CropImageActivity;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.io.ByteArrayOutputStream;
@@ -89,6 +88,9 @@ public class MainActivity extends AppCompatActivity {
         btnShowTrips=findViewById(R.id.showTrips);
 
         sqLiteHelper = new SQLiteHelper(this,"TRIPS-DATABASE.sqlite", null, 1);
+
+        //clean data for testing
+        //sqLiteHelper.queryData("DELETE FROM TRIPS;");
         sqLiteHelper.queryData("CREATE TABLE IF NOT EXISTS TRIPS(" +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT," +
                 "departure_date VARCHAR," +

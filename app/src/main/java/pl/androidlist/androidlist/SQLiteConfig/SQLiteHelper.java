@@ -54,7 +54,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         database.close();
     }
 
-    public void daleteData(int id){
+    public void deleteData(int id){
         SQLiteDatabase database = getWritableDatabase();
 
         String sql = "DELETE FROM TRIPS WHERE id=? ";
