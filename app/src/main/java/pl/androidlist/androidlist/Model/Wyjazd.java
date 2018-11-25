@@ -34,40 +34,24 @@ public class Wyjazd {
     public String getDataWyjazdu() {
         return dataWyjazdu;
     }
-
-    public void setDataWyjazdu(String dataWyjazdu) {
-        this.dataWyjazdu = dataWyjazdu;
-    }
+    
 
     public String getDataPowrotu() {
         return dataPowrotu;
-    }
-
-    public void setDataPowrotu(String dataPowrotu) {
-        this.dataPowrotu = dataPowrotu;
     }
 
     public String getCena() {
         return cena;
     }
 
-    public void setCena(String cena) {
-        this.cena = cena;
-    }
 
     public String getLokalizacja() {
         return lokalizacja;
     }
 
-    public void setLokalizacja(String lokalizacja) {
-        this.lokalizacja = lokalizacja;
-    }
 
     public byte[] getImage() {
         return image;
     }
 
-    public void setImage(byte[] image) {
-        this.image = image;
-    }
 }
