@@ -27,8 +27,6 @@ public class TripsListActivity extends AppCompatActivity {
 
     List<Wyjazd> tripsList = new ArrayList<>();
 
-    ImageView imageViewIcon;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +34,7 @@ public class TripsListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_trips_list);
 
 
-        TripsListRecyclerView = (RecyclerView) findViewById(R.id.trips_recycler_view);
+        TripsListRecyclerView = findViewById(R.id.trips_recycler_view);
         TripsListRecyclerView.setHasFixedSize(true);
         TripsListRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -77,6 +75,7 @@ public class TripsListActivity extends AppCompatActivity {
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int i) {
                 removeTrip((int) viewHolder.itemView.getTag());
+                Toast.makeText(TripsListActivity.this, "Usunięto wycieczkę", Toast.LENGTH_SHORT).show();
             }
         }).attachToRecyclerView(TripsListRecyclerView);
     }
