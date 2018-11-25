@@ -88,7 +88,7 @@ public class TripsListAdapter extends RecyclerView.Adapter<TripsListAdapter.View
         viewHolder.txtDepartureDate.setText(wyjazd.getDataWyjazdu());
         viewHolder.txtReturnDate.setText(wyjazd.getDataPowrotu());
         viewHolder.txtPrice.setText(wyjazd.getCena());
-        viewHolder.txtLocation.setText(wyjazd.getDataWyjazdu());
+        viewHolder.txtLocation.setText(wyjazd.getLokalizacja());
 
         byte [] recordImage = wyjazd.getImage();
         Bitmap bitmap = BitmapFactory.decodeByteArray(recordImage,0,recordImage.length);
