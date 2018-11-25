@@ -1,6 +1,4 @@
-1. Projekt został stworzony w ramach przedmiotu Programowanie aplikacji dekstop oraz na urządzenia mobilne.
-2. Projekt został stworzony przy użyciu środowiska Android Studio
-3. Podczas tworzenia wykorzystana została metoda obróbki zdjęć zaimplementowana w projekcie 
+1. Projekt został stworzony w ramach przedmiotu Programowanie aplikacji dekstop oraz na urządzenia mobilne.  2. Projekt został stworzony przy użyciu środowiska Android Studio  3. Podczas tworzenia wykorzystana została metoda obróbki zdjęć zaimplementowana w projekcie 
 
 https://github.com/ArthurHub/Android-Image-Cropper
 
